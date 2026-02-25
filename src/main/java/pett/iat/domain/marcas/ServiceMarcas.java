@@ -29,9 +29,9 @@ public class ServiceMarcas {
    }
 
    public MarcaDetailDto salvar(MarcaCreateDto dados) {
-      var novaMarca = new Marca(null, dados.nome().toUpperCase());
-
       validacoesCreate.forEach(regras -> regras.validar(dados));
+
+      var novaMarca = new Marca(null, dados.nome().toUpperCase());
 
       marcasArmasRepository.save(novaMarca);
 
