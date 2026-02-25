@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pett.iat.domain.calibre.dtos.CalibreUpdateDto;
 
 @Entity(name = "Calibre")
 @Table(name = "calibres")
@@ -23,5 +24,11 @@ public class Calibre {
    private Long id;
 
    private String nome;
+
+   public void atualizarNome(CalibreUpdateDto dados) {
+      if (dados.nome() != null) {
+         this.nome = dados.nome().toUpperCase().trim();
+      }
+   }
 
 }
