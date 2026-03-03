@@ -72,9 +72,7 @@ public class Arma {
    @Enumerated(EnumType.STRING)
    @Column(name = "sentido_raia_arma")
    private SentidoRaiasArma sentidoRaiasArma;
-
-
-   //construtores
+   
    public Arma(ArmaCreateDto dto, Calibre calibre, Marca marca) {
       this.localRegistroArma = dto.localRegistroArma();
       this.numeroCraf = dto.numeroCraf();
