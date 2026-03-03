@@ -1,5 +1,7 @@
 package pett.iat.domain.arma.dtos;
 
+import java.sql.Date;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import pett.iat.enums.LocalRegistroArma;
@@ -9,25 +11,29 @@ import pett.iat.enums.TipoUsoArma;
 
 public record ArmaCreateDto(
 
-      @NotNull LocalRegistroArma localRegistroArma,
+            @NotNull LocalRegistroArma localRegistroArma,
 
-      @NotBlank String numeroCraf,
+            @NotBlank String numeroCraf,
 
-      @NotBlank String numeroSerie,
+            @NotBlank String numeroSerie,
 
-      @NotBlank String numeroCano,
+            @NotBlank String numeroCano,
 
-      @NotBlank String modelo,
+            @NotBlank String modelo,
 
-      @NotNull Long calibreId, // ID para buscar a entidade Calibre
+            @NotNull Long calibreId, // ID para buscar a entidade Calibre
 
-      @NotNull Long marcaId, // ID para buscar a entidade Marca
+            @NotNull Long marcaId, // ID para buscar a entidade Marca
 
-      @NotNull TipoAlmaArma tipoAlmaArma,
+            @NotNull TipoAlmaArma tipoAlmaArma,
 
-      @NotNull TipoUsoArma tipoUsoArma,
+            @NotNull TipoUsoArma tipoUsoArma,
 
-      int numeroRaias,
+            int numeroRaias,
 
-      SentidoRaiasArma sentidoRaiasArma) {
+            SentidoRaiasArma sentidoRaiasArma,
+
+            @NotNull Boolean vencimentoIndeterminado,
+
+            Date dataVencimentoCraf) {
 }

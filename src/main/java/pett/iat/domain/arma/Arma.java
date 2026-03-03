@@ -1,5 +1,7 @@
 package pett.iat.domain.arma;
 
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -72,6 +74,13 @@ public class Arma {
    @Enumerated(EnumType.STRING)
    @Column(name = "sentido_raia_arma")
    private SentidoRaiasArma sentidoRaiasArma;
+
+   @Column(name ="vencimento_indeterminado")
+   // indeterminado 1 armas de militar
+   private Boolean vencimentoIndeterminado;
+
+   @Column(name = "data_vencimento_craf")
+   private Date dataVencimentoCraf;
    
    public Arma(ArmaCreateDto dto, Calibre calibre, Marca marca) {
       this.localRegistroArma = dto.localRegistroArma();
@@ -85,6 +94,8 @@ public class Arma {
       this.sentidoRaiasArma = dto.sentidoRaiasArma();
       this.calibre = calibre;
       this.marca = marca;
+      this.vencimentoIndeterminado = dto.vencimentoIndeterminado();
+      this.dataVencimentoCraf = dto.dataVencimentoCraf();
    }
 
 }
