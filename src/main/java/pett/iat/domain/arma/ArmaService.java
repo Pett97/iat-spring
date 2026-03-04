@@ -44,8 +44,12 @@ public class ArmaService {
          throw new ValidacaoExecption("local de resgitro da arma é obrigatorio sinarm/sigma");
       }
 
+      if(dto.modelo() ==null){
+          throw new ValidacaoExecption("modelo da arma é obrgatorio");
+      }
+
+
       validacoesAoCriarArma.forEach(regra->regra.validar(dto));
-   //TODO AJUSTARA para salvar
       var arma = new Arma(dto, calibre, marca);
       armaRepository.save(arma);
 

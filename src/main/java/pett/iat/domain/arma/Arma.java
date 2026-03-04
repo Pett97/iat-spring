@@ -85,8 +85,8 @@ public class Arma {
    public Arma(ArmaCreateDto dto, Calibre calibre, Marca marca) {
       this.localRegistroArma = dto.localRegistroArma();
       this.numeroCraf = dto.numeroCraf();
-      this.numeroSerie = dto.numeroSerie();
-      this.numeroCano = dto.numeroCano();
+      this.numeroSerie = dto.numeroSerie().toUpperCase().trim();
+      this.numeroCano = dto.numeroCano().toUpperCase().trim();
       this.modelo = dto.modelo();
       this.tipoAlmaArma = dto.tipoAlmaArma();
       this.tipoUsoArma = dto.tipoUsoArma();
