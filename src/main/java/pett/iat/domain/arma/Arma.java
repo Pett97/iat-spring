@@ -1,6 +1,7 @@
 package pett.iat.domain.arma;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -81,6 +82,11 @@ public class Arma {
 
    @Column(name = "data_vencimento_craf")
    private Date dataVencimentoCraf;
+
+   private Boolean deletada;
+
+   @Column(name = "delete_at")
+   private LocalDateTime deletedAt;
    
    public Arma(ArmaCreateDto dto, Calibre calibre, Marca marca) {
       this.localRegistroArma = dto.localRegistroArma();
@@ -96,6 +102,12 @@ public class Arma {
       this.marca = marca;
       this.vencimentoIndeterminado = dto.vencimentoIndeterminado();
       this.dataVencimentoCraf = dto.dataVencimentoCraf();
+      this.deletada = false;
+   }
+
+   public void deletar(){
+      this.deletada = true;
+      this.deletedAt = LocalDateTime.now();
    }
 
 }
