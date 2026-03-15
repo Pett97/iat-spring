@@ -9,6 +9,7 @@ import pett.iat.domain.arma.dtos.ArmaCreateDto;
 import pett.iat.domain.arma.dtos.ArmaDetailDto;
 import pett.iat.domain.arma.dtos.ArmaUpdateDto;
 import pett.iat.domain.arma.validacoes.create.ValidacaoCriarArma;
+import pett.iat.domain.arma.validacoes.update.ValidarUpdateArma;
 import pett.iat.domain.calibre.Calibre;
 import pett.iat.domain.calibre.CalibreRespository;
 import pett.iat.domain.marcas.Marca;
@@ -29,15 +30,34 @@ public class ArmaService {
    @Autowired
    private List<ValidacaoCriarArma> validacoesAoCriarArma;
 
+   @Autowired
+   private List<ValidarUpdateArma> validacoesUpdateArma;
+
    public List<ArmaDetailDto> listar() {
       return armaRepository.findAll().stream().map(ArmaDetailDto::new).toList();
    }
 
    public ArmaDetailDto atualizar(ArmaUpdateDto dto) {
       var arma = armaRepository.findById(dto.id())
-            .orElseThrow(() -> new ValidacaoExecption("nenhuma arma encontrada com esse id"));
+            .orElseThrow(() -> new ValidacaoExecption("nenhuma armaencontrada com esse id"));
 
-            
+      if (dto.calibreId() != null) {
+         var calibre = this.getCalibreById(dto.calibreId());
+         if (calibre == null) {
+            throw new ValidacaoExecption("não foi encontrado o calibre informado");
+         }
+      }
+
+      if (dto.marcaId() != null) {
+         var marca = this.getMarcaById(dto.marcaId());
+
+         if (marca == null) {
+            throw new ValidacaoExecption("não foi encontrado a marca informada");
+         }
+      }
+      validacoesUpdateArma.forEach(regra -> regra.validaArma(dto));
+      arma.atualizar(dto);
+      return new ArmaDetailDto(arma);
    }
 
    public ArmaDetailDto salvar(ArmaCreateDto dto) {

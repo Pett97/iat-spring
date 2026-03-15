@@ -19,6 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pett.iat.domain.arma.dtos.ArmaCreateDto;
+import pett.iat.domain.arma.dtos.ArmaUpdateDto;
 import pett.iat.domain.calibre.Calibre;
 import pett.iat.domain.marcas.Marca;
 import pett.iat.enums.LocalRegistroArma;
@@ -37,7 +38,7 @@ public class Arma {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   
+
    @Column(name = "local_registro_arma")
    @Enumerated(EnumType.STRING)
    private LocalRegistroArma localRegistroArma;
@@ -46,7 +47,7 @@ public class Arma {
    private String numeroCraf;
 
    @Column(name = "numero_serie")
-   private String numeroSerie;   
+   private String numeroSerie;
 
    @Column(name = "numero_cano")
    private String numeroCano;
@@ -76,7 +77,7 @@ public class Arma {
    @Column(name = "sentido_raia_arma")
    private SentidoRaiasArma sentidoRaiasArma;
 
-   @Column(name ="vencimento_indeterminado")
+   @Column(name = "vencimento_indeterminado")
    // indeterminado 1 armas de militar
    private Boolean vencimentoIndeterminado;
 
@@ -87,7 +88,7 @@ public class Arma {
 
    @Column(name = "delete_at")
    private LocalDateTime deletedAt;
-   
+
    public Arma(ArmaCreateDto dto, Calibre calibre, Marca marca) {
       this.localRegistroArma = dto.localRegistroArma();
       this.numeroCraf = dto.numeroCraf();
@@ -105,9 +106,45 @@ public class Arma {
       this.deletada = false;
    }
 
-   public void deletar(){
+   public void deletar() {
       this.deletada = true;
       this.deletedAt = LocalDateTime.now();
+   }
+
+   public void atualizar(ArmaUpdateDto dto) {
+      if (dto.localRegistroArma() != null) {
+         this.localRegistroArma = dto.localRegistroArma();
+      }
+      if (dto.numeroCraf() != null) {
+         this.numeroCraf = dto.numeroCraf();
+      }
+      if (dto.numeroSerie() != null) {
+         this.numeroSerie = dto.numeroSerie().toUpperCase().trim();
+      }
+      if (dto.numeroCano() != null) {
+         this.numeroCano = dto.numeroCano().toUpperCase().trim();
+      }
+      if (dto.modelo() != null) {
+         this.modelo = dto.modelo();
+      }
+      if (dto.tipoAlmaArma() != null) {
+         this.tipoAlmaArma = dto.tipoAlmaArma();
+      }
+      if (dto.tipoUsoArma() != null) {
+         this.tipoUsoArma = dto.tipoUsoArma();
+      }
+      if (dto.numeroRaias() != 0) {
+         this.numeroRaias = dto.numeroRaias();
+      }
+      if (dto.sentidoRaiasArma() != null) {
+         this.sentidoRaiasArma = dto.sentidoRaiasArma();
+      }
+      if (dto.vencimentoIndeterminado() != null) {
+         this.vencimentoIndeterminado = dto.vencimentoIndeterminado();
+      }
+      if (dto.dataVencimentoCraf() != null) {
+         this.dataVencimentoCraf = dto.dataVencimentoCraf();
+      }
    }
 
 }

@@ -11,4 +11,10 @@ public interface ArmaRepository extends JpaRepository<Arma, Long> {
    Optional<Arma> findByNumeroSerie(String numeroSerie);
 
    Optional<Arma> findByNumeroCano(String numeroCano);
+
+   boolean existsByNumeroCrafAndIdNot(String numeroCraf, Long id);
+
+   boolean existsByNumeroSerieAndIdNot(String numeroSerie,Long id);
+
+   boolean existsByNumeroCanoAndIdNot(String numeroCano,Long id);
 }
