@@ -2,28 +2,28 @@ package pett.iat.domain.produto;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pett.iat.domain.produto.dtos.ProdutoUpdateDto;
-import pett.iat.enums.TipoProduto;
 
 @Entity(name = "Produto")
 @Table(name = "produtos")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) //class abstrata não se instancia sozinha 
 @EqualsAndHashCode(of = "id")
-public class Produto {
+public abstract class Produto {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,13 @@ public class Produto {
    private String nome;
    private String sku;
 
-   @Enumerated(EnumType.STRING)
-   @Column(name = "tipo_produto")
-   private TipoProduto tipoProduto;
-
    private BigDecimal preco;
+
+   protected Produto(String nome, String sku, BigDecimal preco) {
+      this.nome = nome;
+      this.sku = sku;
+      this.preco = preco;
+   }
 
    public void atualizarProduto(ProdutoUpdateDto dados) {
       if (dados.nome() != null) {
