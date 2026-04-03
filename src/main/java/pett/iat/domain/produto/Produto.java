@@ -2,6 +2,7 @@ package pett.iat.domain.produto;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,7 @@ public abstract class Produto {
    private String nome;
    private String sku;
 
+   @Column(precision = 19,scale = 2)
    private BigDecimal preco;
 
    protected Produto(String nome, String sku, BigDecimal preco) {

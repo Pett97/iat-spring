@@ -9,9 +9,9 @@ import jakarta.validation.constraints.Size;
 
 public record ProdutoCreateDto(
 
-      @NotBlank @Size(min = 3) String nome,
+      @NotBlank @Size(min = 3,max = 74) String nome,
 
-      @NotBlank @Size(min = 3) String sku,
+      @NotBlank @Size(min = 3,max = 74) String sku,
 
       @NotNull @DecimalMin(value = "0.00", inclusive = true) BigDecimal preco
 

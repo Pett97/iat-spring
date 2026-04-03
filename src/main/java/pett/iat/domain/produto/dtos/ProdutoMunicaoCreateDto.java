@@ -11,11 +11,10 @@ import jakarta.validation.constraints.Size;
 
 public record ProdutoMunicaoCreateDto(
 
-      @NotBlank @Size(min = 3) String nome,
-      @NotBlank @Size(min = 3) String sku,
-      @NotNull @DecimalMin("0.00") BigDecimal preco,
-
-      @NotNull long calibre_id
+            @NotBlank @Size(min = 3, max = 74) String nome,
+            @NotBlank @Size(min = 3, max = 74) String sku,
+            @NotNull @DecimalMin("0.00") BigDecimal preco,
+            @NotNull Long calibreId
 
 ) {
 

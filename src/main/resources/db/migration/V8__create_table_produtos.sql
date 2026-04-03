@@ -4,7 +4,7 @@ CREATE TABLE produtos (
 
    nome VARCHAR(75) NOT NULL,
    sku VARCHAR(75) NOT NULL UNIQUE,
-   preco DECIMAL(10,4) NOT NULL,
+   preco DECIMAL(19,2) NOT NULL,
 
    calibre_id BIGINT,
 

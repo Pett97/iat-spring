@@ -6,9 +6,11 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
 import pett.iat.domain.calibre.Calibre;
 
 @Entity
+@Getter
 @DiscriminatorValue("MUNICAO")
 public class ProdutoMunicao extends Produto {
 

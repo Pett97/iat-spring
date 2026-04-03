@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
-import pett.iat.domain.arma.ArmaRepository;
 import pett.iat.domain.arma.ArmaService;
 import pett.iat.domain.arma.dtos.ArmaCreateDto;
 import pett.iat.domain.arma.dtos.ArmaDetailDto;
