@@ -22,7 +22,7 @@ import pett.iat.domain.arma.dtos.ArmaUpdateDto;
 
 @RestController
 @RequestMapping("armas")
-public class ArmasController {
+public class ArmaController {
 
    @Autowired
    private ArmaService armaService;

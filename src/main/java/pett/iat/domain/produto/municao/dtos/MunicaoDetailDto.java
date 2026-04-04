@@ -1,18 +1,18 @@
-package pett.iat.domain.produto.dtos;
+package pett.iat.domain.produto.municao.dtos;
 
 import java.math.BigDecimal;
 
 import pett.iat.domain.calibre.dtos.CalibreDetailDto;
-import pett.iat.domain.produto.ProdutoMunicao;
+import pett.iat.domain.produto.municao.Municao;
 
-public record ProdutoMunicaoDetailDto(
+public record MunicaoDetailDto(
       Long id,
       String nome,
       String sku,
       BigDecimal preco,
       CalibreDetailDto calibre) {
 
-   public ProdutoMunicaoDetailDto(ProdutoMunicao produto) {
+   public MunicaoDetailDto(Municao produto) {
       this(produto.getId(),
             produto.getNome(),
             produto.getSku(),

@@ -1,0 +1,20 @@
+CREATE TABLE lotes{
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   codigo VARCHAR(75) NOT NULL UNIQUE,
+   desativado tinyint default 0 ,
+   PRIMARY KEY(id)
+};
+
+
+CREATE TABLE codigos_embalagens{
+   id BIGINT NOT AUTO_INCREMENT,
+   numero_serie VARCHAR(200) NOT NULL UNIQUE,
+   lote_id BIGINT NOT NULL,
+   status ENUM ("DISPONIVEL","VENDIDO","RESERVADO","EXTRAVIADO","DEVOLUCAO_FORNECEDOR"),
+   venda_id BIGINT NULL,
+   data_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   data_saida TIMESTAMP NULL DEFAULT NULL,
+
+   PRIMARY KEY(id),
+   CONSTRAINT fl_unidades_lote FOREIGN KEY (lote_id) REFERENCES lotes(id)
+}

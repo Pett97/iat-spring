@@ -1,4 +1,4 @@
-package pett.iat.domain.produto.dtos;
+package pett.iat.domain.produto.municao.dtos;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 
 //até daria para deixar sem o not blanck de sku MAS eu prefiro  deixar assim 
 
-public record ProdutoMunicaoCreateDto(
+public record MunicaoCreateDto(
 
             @NotBlank @Size(min = 3, max = 74) String nome,
             @NotBlank @Size(min = 3, max = 74) String sku,

@@ -30,8 +30,8 @@ public abstract class Produto {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private long id;
 
-   private String nome;
-   private String sku;
+   protected String nome;
+   protected String sku;
 
    @Column(precision = 19,scale = 2)
    private BigDecimal preco;
@@ -42,15 +42,15 @@ public abstract class Produto {
       this.preco = preco;
    }
 
-   public void atualizarProduto(ProdutoUpdateDto dados) {
-      if (dados.nome() != null) {
-         this.nome = dados.nome().toUpperCase();
+   public void atualizarProdutoBase(String nome , String sku , BigDecimal preco) {
+      if (nome != null) {
+         this.nome = nome.toUpperCase();
       }
-      if (dados.sku() != null) {
-         this.sku = dados.sku().toUpperCase().trim();
+      if (sku != null) {
+         this.sku = sku.toUpperCase().trim();
       }
-      if (dados.preco() != null) {
-         this.preco = dados.preco();
+      if (preco != null) {
+         this.preco = preco;
       }
    }
 
