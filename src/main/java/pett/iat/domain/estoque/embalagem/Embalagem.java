@@ -14,9 +14,11 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pett.iat.domain.estoque.embalagem.dto.update.EmbalagemUpdateDto;
 import pett.iat.domain.estoque.lote.Lote;
 import pett.iat.enums.StatusMunicao;
 
@@ -27,6 +29,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 @EqualsAndHashCode(of = "id")
 public class Embalagem {
 
@@ -45,7 +48,7 @@ public class Embalagem {
    public LocalDateTime dataSaida;
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "lote_id",nullable = false)
+   @JoinColumn(name = "lote_id", nullable = false)
    public Lote lote;
 
    @PrePersist
@@ -54,6 +57,9 @@ public class Embalagem {
       if (this.dataEntrada == null) {
          this.dataEntrada = LocalDateTime.now();
       }
+      if (this.statusMunicao == null) {
+         this.statusMunicao = StatusMunicao.DISPONIVEL;
+      }
    }
 
    @PreUpdate
@@ -61,8 +67,33 @@ public class Embalagem {
       this.codigo = this.codigo != null ? this.codigo.toUpperCase().trim() : null;
    }
 
+
+   //anotacao builder cuida
+   // public Embalagem(String codigo,StatusMunicao statusMunicao,LocalDateTime dataEntrada, LocalDateTime dataSaida,Lote lote){
+   //    this.codigo = codigo;this.statusMunicao = statusMunicao;this.dataEntrada = dataEntrada;this.dataSaida = dataSaida;this.lote = lote;
+   // }
+
    public void registrarSaida(StatusMunicao status) {
       this.dataSaida = LocalDateTime.now();
       this.statusMunicao = status;
+   }
+
+   public void atualizar(EmbalagemUpdateDto dados, Lote novoLote) {
+      if (dados.codigo() != null) {
+         this.codigo = dados.codigo();
+      }
+      if (dados.dataEntrada() != null) {
+         this.dataEntrada = dados.dataEntrada();
+      }
+      if (dados.dataSaida() != null) {
+         this.dataSaida = dados.dataSaida();
+      }
+      if (dados.statusMunicao() != null) {
+         this.statusMunicao = dados.statusMunicao();
+      }
+      if (novoLote != null) {
+         this.lote = novoLote;
+      }
+
    }
 }
