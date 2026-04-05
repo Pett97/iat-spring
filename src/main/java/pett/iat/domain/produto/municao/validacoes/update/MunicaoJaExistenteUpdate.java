@@ -1,20 +1,20 @@
-package pett.iat.domain.produto.municao.validacoes.create;
+package pett.iat.domain.produto.municao.validacoes.update;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import pett.iat.domain.ValidacaoExecption;
 import pett.iat.domain.produto.ProdutoRepository;
-import pett.iat.domain.produto.municao.dtos.MunicaoCreateDto;
+import pett.iat.domain.produto.municao.dtos.MunicaoUpdateDto;
 
 @Component
-public class MunicaoJaExistente implements ValidarCreateMunicao {
+public class MunicaoJaExistenteUpdate implements ValidarUpdateMunicao {
 
    @Autowired
    private ProdutoRepository produtoRepository;
 
    @Override
-   public void validar(MunicaoCreateDto dados) {
+   public void validar(MunicaoUpdateDto dados) {
       if (produtoRepository.existsBySkuIgnoreCase(dados.sku())
             || produtoRepository.existsByNomeIgnoreCase(dados.nome())) {
          throw new ValidacaoExecption(

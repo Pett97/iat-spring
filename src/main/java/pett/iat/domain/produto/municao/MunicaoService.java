@@ -9,6 +9,8 @@ import pett.iat.domain.calibre.CalibreRespository;
 import pett.iat.domain.produto.municao.dtos.MunicaoCreateDto;
 import pett.iat.domain.produto.municao.dtos.MunicaoDetailDto;
 import pett.iat.domain.produto.municao.dtos.MunicaoUpdateDto;
+import pett.iat.domain.produto.municao.validacoes.create.ValidarCreateMunicao;
+import pett.iat.domain.produto.municao.validacoes.update.ValidarUpdateMunicao;
 
 @Service
 public class MunicaoService {
@@ -19,17 +21,21 @@ public class MunicaoService {
     @Autowired
     private CalibreRespository calibreRespository;
 
+    @Autowired
+    private List<ValidarCreateMunicao> validacoesCreateMunicao;
+
+    @Autowired
+    private List<ValidarUpdateMunicao> validarUpdateMunicaos;
+
     public List<MunicaoDetailDto> listarMunicoes() {
         return this.produtoMunicaoRepository.findAll().stream().map(MunicaoDetailDto::new).toList();
     }
 
     public MunicaoDetailDto cadastrar(MunicaoCreateDto dados) {
+
+        validacoesCreateMunicao.forEach(regras -> regras.validar(dados));
+        
         var calibre = this.buscarCalibrePorId(dados.calibreId());
-
-        if (calibre == null) {
-            throw new ValidacaoExecption("Nao foi encontrado calibre");
-        }
-
         var municao = new Municao(dados.nome(), dados.sku(), dados.preco(), calibre);
 
         produtoMunicaoRepository.save(municao);
@@ -38,6 +44,9 @@ public class MunicaoService {
     }
 
     public MunicaoDetailDto update(MunicaoUpdateDto dados) {
+
+        validarUpdateMunicaos.forEach(regras -> regras.validar(dados));
+
         var municao = produtoMunicaoRepository.findById(dados.id())
                 .orElseThrow(() -> new ValidacaoExecption("Produto Municao não encontrada com o ID: " + dados.id()));
 
