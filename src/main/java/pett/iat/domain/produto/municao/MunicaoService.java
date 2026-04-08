@@ -36,7 +36,7 @@ public class MunicaoService {
         validacoesCreateMunicao.forEach(regras -> regras.validar(dados));
 
         var calibre = this.buscarCalibrePorId(dados.calibreId());
-        var municao = new Municao(dados.nome(), dados.sku(), dados.preco(), calibre);
+        var municao = new Municao(dados.nome(), dados.sku(), dados.preco(), dados.quantidade(),calibre);
 
         produtoMunicaoRepository.save(municao);
 

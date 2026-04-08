@@ -1,6 +1,7 @@
 package pett.iat.domain.estoque.embalagem;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,10 @@ public interface EmbalagemRepository extends JpaRepository<Embalagem, Long> {
    List<Embalagem> findByDataSaidaIsNotNull();
 
    List<Embalagem> findByStatusMunicao(StatusMunicao statusMunicao);
+
+   Optional<Embalagem> findByCodigo(String codigo);
+
+   Optional<Embalagem> findByIdAndVendaIsNull(Long id);
+
+   
 }

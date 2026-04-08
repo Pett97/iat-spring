@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pett.iat.domain.ValidacaoExecption;
+import pett.iat.domain.estoque.embalagem.dto.EmbalagemCreateDto;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemDetailDto;
-import pett.iat.domain.estoque.embalagem.dto.create.EmbalagemCreateDto;
-import pett.iat.domain.estoque.embalagem.dto.update.EmbalagemUpdateDto;
+import pett.iat.domain.estoque.embalagem.dto.EmbalagemUpdateDto;
+import pett.iat.domain.estoque.embalagem.validacoes.create.ValidarCriarEmbalagem;
+import pett.iat.domain.estoque.embalagem.validacoes.update.ValidarAtualizarEmbalagem;
 import pett.iat.domain.estoque.lote.Lote;
 import pett.iat.domain.estoque.lote.LoteRepository;
 import pett.iat.enums.StatusMunicao;
@@ -23,8 +25,12 @@ public class EmbalagemService {
    @Autowired
    private LoteRepository loteRepository;
 
+   private List<ValidarCriarEmbalagem> validacoesAoCriarEmbalagem;
+   private List<ValidarAtualizarEmbalagem> validacoesAtualizarEmbalagem;
+
    public EmbalagemDetailDto cadastrar(EmbalagemCreateDto dados) {
-      //TODO ajustar aqui para regras de validações
+      validacoesAoCriarEmbalagem.forEach(regras -> regras.validar(dados));
+
       Lote loteEncontrado = this.getLoteById(dados.idLote());
 
       Embalagem embalagem = Embalagem.builder()
@@ -34,7 +40,7 @@ public class EmbalagemService {
             .lote(loteEncontrado)
             .build();
 
-      return new EmbalagemDetailDto(embalagem);      
+      return new EmbalagemDetailDto(embalagem);
    }
 
    public List<EmbalagemDetailDto> listar() {
@@ -54,19 +60,10 @@ public class EmbalagemService {
    }
 
    public EmbalagemDetailDto atualizar(Long id, EmbalagemUpdateDto dados) {
-
+      this.validacoesAtualizarEmbalagem.forEach(regras->regras.validar(dados));
       var embalagem = this.getEmbalagemById(id);
 
       var lote = this.getLoteById(dados.idLote());
-
-      // TODO ajustar aqui
-      if (embalagem == null) {
-         throw new ValidacaoExecption("Nao foi encontrada nenhuma embalagem com esse id;" + dados.id());
-      }
-
-      if (lote == null) {
-         throw new ValidacaoExecption("Nao foi encontrada nenhum lote com esse id;" + dados.idLote());
-      }
 
       embalagem.atualizar(dados, lote);
       return new EmbalagemDetailDto(embalagem);

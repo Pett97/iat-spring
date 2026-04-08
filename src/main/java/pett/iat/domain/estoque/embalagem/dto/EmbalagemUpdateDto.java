@@ -1,4 +1,4 @@
-package pett.iat.domain.estoque.embalagem.dto.update;
+package pett.iat.domain.estoque.embalagem.dto;
 
 import java.time.LocalDateTime;
 

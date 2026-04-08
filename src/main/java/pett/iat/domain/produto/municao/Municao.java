@@ -19,8 +19,8 @@ import pett.iat.domain.produto.municao.dtos.MunicaoUpdateDto;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Municao extends Produto {
 
-   public Municao(String nome, String sku, BigDecimal preco, Calibre calibre) {
-      super(nome, sku, preco);
+   public Municao(String nome, String sku, BigDecimal preco, int quantidade,Calibre calibre) {
+      super(nome, sku, preco,quantidade);
       this.calibre = calibre;
    }
 
@@ -34,4 +34,5 @@ public class Municao extends Produto {
    @ManyToOne
    @JoinColumn(name = "calibre_id", nullable = false)
    private Calibre calibre;
+
 }
