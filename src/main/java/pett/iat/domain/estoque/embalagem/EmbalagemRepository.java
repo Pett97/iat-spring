@@ -23,5 +23,5 @@ public interface EmbalagemRepository extends JpaRepository<Embalagem, Long> {
 
    Optional<Embalagem> findByIdAndVendaIsNull(Long id);
 
-   
+   boolean existsByLoteid(Long idLote);   
 }

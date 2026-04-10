@@ -15,8 +15,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pett.iat.domain.estoque.lote.dto.LoteUpdateDto;
 import pett.iat.domain.produto.municao.Municao;
-
 
 @Entity(name = "Lote")
 @Table(name = "lotes")
@@ -33,12 +33,18 @@ public class Lote {
    private String codigo;
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "produto_id",nullable = false)
+   @JoinColumn(name = "produto_id", nullable = false)
    private Municao municao;
 
    @PrePersist
    @PreUpdate
-   private void formatarDados(){
-      this.codigo = this.codigo !=null ? this.codigo.toUpperCase().trim():null;
+   private void formatarDados() {
+      this.codigo = this.codigo != null ? this.codigo.toUpperCase().trim() : null;
+   }
+
+   public void atualizar(LoteUpdateDto dto) {
+      if (dto.codigo() != null) {
+         this.codigo = dto.codigo().toUpperCase().trim();
+      }
    }
 }

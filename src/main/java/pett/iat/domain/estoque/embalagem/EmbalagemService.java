@@ -58,7 +58,6 @@ public class EmbalagemService {
    public List<EmbalagemDetailDto> listarEmabalagemPorStatus(StatusMunicao status) {
       return this.embalagemRepository.findByStatusMunicao(status).stream().map(EmbalagemDetailDto::new).toList();
    }
-
    public EmbalagemDetailDto atualizar(Long id, EmbalagemUpdateDto dados) {
       this.validacoesAtualizarEmbalagem.forEach(regras->regras.validar(dados));
       var embalagem = this.getEmbalagemById(id);
