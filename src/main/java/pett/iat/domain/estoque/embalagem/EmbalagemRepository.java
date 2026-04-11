@@ -20,8 +20,9 @@ public interface EmbalagemRepository extends JpaRepository<Embalagem, Long> {
    List<Embalagem> findByStatusMunicao(StatusMunicao statusMunicao);
 
    Optional<Embalagem> findByCodigo(String codigo);
+   //TODO tem que as vendas ou coisa assim 
+   //Optional<Embalagem> findByIdAndVendaIsNull(Long id);
 
-   Optional<Embalagem> findByIdAndVendaIsNull(Long id);
-
-   boolean existsByLoteid(Long idLote);   
+   boolean existsByLoteId(Long idLote);
+    
 }

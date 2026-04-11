@@ -9,7 +9,7 @@ import pett.iat.domain.estoque.embalagem.EmbalagemRepository;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemUpdateDto;
 
 @Component
-public class ValidarEmbalagemJaExiste implements ValidarAtualizarEmbalagem {
+public class ValidarEmbalagemJaExisteUpdate implements ValidarAtualizarEmbalagem {
 
    @Autowired
    private EmbalagemRepository embalagemRepository;

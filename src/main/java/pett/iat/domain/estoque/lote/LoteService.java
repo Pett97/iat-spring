@@ -56,14 +56,19 @@ public class LoteService {
       if (id == null) {
          throw new ValidacaoExecption("Para Listar as municoes por produto informe um produto");
       }
-      return this.loteRepository.findByMunicao(id).stream().map(LoteDetailDto::new).toList();
+      return this.loteRepository.findByMunicaoId(id).stream().map(LoteDetailDto::new).toList();
    }
 
-   public void deletar(Long loteId) {
-      if (this.embalagemRepository.existsByLoteid(loteId)) {
-         throw new ValidacaoExecption(
-               "Não è possivel deletar o lote com id: " + loteId + "existem embalagens vinculadas");
+   public void deletar(Lote lote) {
+
+      if (!this.loteRepository.existsById(lote.getId())) {
+         throw new ValidacaoExecption("Nenhum lote encontrado para o id: " + lote.getId());
       }
-      this.loteRepository.deleteById(loteId);
+
+      if (this.embalagemRepository.existsByLoteId(lote.getId())) {
+         throw new ValidacaoExecption(
+               "Não è possivel deletar o lote com id: " + lote.getId() + "existem embalagens vinculadas");
+      }
+      this.loteRepository.deleteById(lote.getId());
    }
 }

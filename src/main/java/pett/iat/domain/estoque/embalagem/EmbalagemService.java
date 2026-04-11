@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pett.iat.domain.ValidacaoExecption;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemCreateDto;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemDetailDto;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemUpdateDto;
@@ -58,8 +57,9 @@ public class EmbalagemService {
    public List<EmbalagemDetailDto> listarEmabalagemPorStatus(StatusMunicao status) {
       return this.embalagemRepository.findByStatusMunicao(status).stream().map(EmbalagemDetailDto::new).toList();
    }
+
    public EmbalagemDetailDto atualizar(Long id, EmbalagemUpdateDto dados) {
-      this.validacoesAtualizarEmbalagem.forEach(regras->regras.validar(dados));
+      this.validacoesAtualizarEmbalagem.forEach(regras -> regras.validar(dados));
       var embalagem = this.getEmbalagemById(id);
 
       var lote = this.getLoteById(dados.idLote());

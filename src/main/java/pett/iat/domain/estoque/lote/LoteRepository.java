@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
 
 @Repository
 public interface LoteRepository extends JpaRepository<Lote, Long> {
 
-   List<Lote> findByMunicao(Long id);
+   List<Lote> findByMunicaoId(Long id);
 
    Optional<Lote>findByCodigo(String codigo);
 }

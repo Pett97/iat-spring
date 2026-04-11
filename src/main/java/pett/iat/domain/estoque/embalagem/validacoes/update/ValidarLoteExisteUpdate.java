@@ -9,7 +9,7 @@ import pett.iat.domain.estoque.lote.Lote;
 import pett.iat.domain.estoque.lote.LoteRepository;
 
 @Component
-public class ValidarLoteExiste implements ValidarAtualizarEmbalagem {
+public class ValidarLoteExisteUpdate implements ValidarAtualizarEmbalagem {
 
    @Autowired
    private LoteRepository loteRepository;
