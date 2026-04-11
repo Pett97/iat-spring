@@ -1,0 +1,21 @@
+
+CREATE TABLE lotes (
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   codigo VARCHAR(75) NOT NULL UNIQUE,
+   desativado TINYINT(1) NOT NULL DEFAULT 0,
+   produto_id BIGINT NOT NULL,
+   PRIMARY KEY (id),
+   CONSTRAINT fk_produto_id FOREIGN KEY(produto_id) REFERENCES produtos(id)
+);
+
+CREATE TABLE codigos_embalagens (
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   numero_serie VARCHAR(200) NOT NULL UNIQUE,
+   lote_id BIGINT NOT NULL,
+   status ENUM('DISPONIVEL', 'VENDIDO', 'RESERVADO', 'EXTRAVIADO', 'DEVOLUCAO_FORNECEDOR') NOT NULL,
+   venda_id BIGINT NULL,
+   data_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   data_saida TIMESTAMP NULL DEFAULT NULL,
+   PRIMARY KEY (id),
+   CONSTRAINT fk_unidades_lote FOREIGN KEY (lote_id) REFERENCES lotes(id)
+);

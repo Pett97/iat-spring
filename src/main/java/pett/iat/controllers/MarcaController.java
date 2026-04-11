@@ -23,7 +23,7 @@ import pett.iat.domain.marcas.dtos.MarcaUpdateDto;
 
 @RestController
 @RequestMapping("marcas")
-public class MarcasController {
+public class MarcaController {
 
    @Autowired
    private ServiceMarcas serviceMarcas;
