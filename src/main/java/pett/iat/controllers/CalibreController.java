@@ -61,6 +61,7 @@ public class CalibreController {
    @DeleteMapping("/{id}")
    @Transactional
    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+      //TODO ajustar n posso deletar um que esta em uma arma ou municao  
       calibreRespository.deleteById(id);
       return ResponseEntity.noContent().build();
    }
