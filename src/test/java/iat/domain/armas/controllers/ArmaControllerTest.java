@@ -58,11 +58,26 @@ public class ArmaControllerTest extends BaseTest {
 
       private Marca marca;
       private Calibre calibre;
+      private Arma armaControle;
 
       @BeforeEach
       void setup() {
             marca = marcasRepository.save(new Marca("GLOCK"));
             calibre = calibreRepository.save(new Calibre("9mm"));
+            armaControle = armaRepository.save(new Arma(
+                        LocalRegistroArma.SINARM,
+                        "ARMACONTROLE",
+                        "ARMACONTROLE",
+                        "ARMACONTROLE",
+                        "ARMACONTROLE",
+                        calibre,
+                        marca,
+                        TipoAlmaArma.RAIADA,
+                        TipoUsoArma.PERMITIDA,
+                        6,
+                        SentidoRaiasArma.DIREITA,
+                        false,
+                        Date.valueOf("2030-01-01")));
       }
 
       @Test
@@ -102,7 +117,7 @@ public class ArmaControllerTest extends BaseTest {
             mockMvc.perform(get("/armas"))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$").isArray())
-                        .andExpect(jsonPath("$.length()").value(1));
+                        .andExpect(jsonPath("$.length()").value(2));
       }
 
       @Test
@@ -111,21 +126,20 @@ public class ArmaControllerTest extends BaseTest {
       void atualizar_cenario1() throws Exception {
             var arma = armaRepository.save(new Arma(criarDtoExemplo("ORIGINAL"), calibre, marca));
             var dtoUpdate = new ArmaUpdateDto(
-                        arma.getId(), // ID obrigatório
-                        null, // localRegistroArma
-                        null, // numeroCraf
-                        "SERIE_NOVA", // numeroSerie (o que vamos testar)
-                        null, // numeroCano
-                        "Modelo Novo", // modelo (o que vamos testar)
-                        null, // calibreId
-                        null, // marcaId
-                        null, // tipoAlmaArma
-                        null, // tipoUsoArma
-                        2, // numeroRaias (agora aceita null!)
-                        null, // sentidoRaiasArma
-                        null, // vencimentoIndeterminado
-                        null // dataVencimentoCraf
-            );
+                        arma.getId(),
+                        null,
+                        null,
+                        "SERIE_NOVA", // teste
+                        null,
+                        "Modelo Novo", // teste
+                        null,
+                        null,
+                        null,
+                        null,
+                        2,
+                        null,
+                        null,
+                        null);
 
             mockMvc.perform(
                         put("/armas")
@@ -145,8 +159,7 @@ public class ArmaControllerTest extends BaseTest {
             mockMvc.perform(delete("/armas/" + arma.getId()))
                         .andExpect(status().isNoContent());
 
-            // Se o seu service fizer Soft Delete, verifique se o campo 'deletada' é true
-            // Se for delete real, verifique se existsById é false
+           //TODO ANALISAR 
       }
 
       private ArmaCreateDto criarDtoExemplo(String serie) {
