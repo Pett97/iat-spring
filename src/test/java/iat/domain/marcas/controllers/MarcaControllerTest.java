@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import iat.domain.BaseTest;
 import pett.iat.IatApplication;
 import pett.iat.domain.marcas.Marca;
 import pett.iat.domain.marcas.MarcasARepository;
@@ -30,7 +31,7 @@ import pett.iat.domain.marcas.dtos.MarcaUpdateDto;
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 @ActiveProfiles("test")
-public class MarcaControllerTest {
+public class MarcaControllerTest extends BaseTest {
 
    @Autowired
    private MockMvc mockMvc;
@@ -44,10 +45,7 @@ public class MarcaControllerTest {
    @Autowired
    private JacksonTester<MarcaUpdateDto> marcaUpdateDtoJson;
 
-   @BeforeEach
-   void limparBanco() {
-      marcasARepository.deleteAll();
-   }
+   
 
    @Test
    @DisplayName("Deve ser possivel listar todos as marcas")

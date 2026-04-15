@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import iat.domain.BaseTest;
 import pett.iat.IatApplication;
 import pett.iat.domain.calibre.Calibre;
 import pett.iat.domain.calibre.CalibreRespository;
@@ -26,19 +27,14 @@ import pett.iat.domain.calibre.CalibreRespository;
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 @ActiveProfiles("test")
-public class CalibreControllerTest {
+public class CalibreControllerTest extends BaseTest {
 
    @Autowired
    private MockMvc mockMvc;
 
    @Autowired
    private CalibreRespository calibreRespository;
-
-   @BeforeEach
-   void limparBanco() {
-      calibreRespository.deleteAll();
-   }
-
+   
    @Test
    @DisplayName("Deve ser possivel listar todos os calibres")
    void deveListarCalibres() throws Exception {
