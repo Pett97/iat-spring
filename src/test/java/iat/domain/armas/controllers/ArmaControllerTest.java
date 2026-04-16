@@ -5,14 +5,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,10 +34,16 @@ import java.sql.Date;
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 @ActiveProfiles("test")
-public class ArmaControllerTest extends BaseTest {
+class ArmaControllerTest extends BaseTest {
 
       @Autowired
       private MockMvc mockMvc;
+
+      @Autowired
+      private JacksonTester<ArmaCreateDto> createJson;
+
+      @Autowired
+      private JacksonTester<ArmaUpdateDto> updateJson;
 
       @Autowired
       private ArmaRepository armaRepository;
@@ -50,46 +54,28 @@ public class ArmaControllerTest extends BaseTest {
       @Autowired
       private CalibreRespository calibreRepository;
 
-      @Autowired
-      private JacksonTester<ArmaCreateDto> armaCreateDtoJson;
-
-      @Autowired
-      private JacksonTester<ArmaUpdateDto> armaUpdateDtoJson;
-
       private Marca marca;
       private Calibre calibre;
-      private Arma armaControle;
 
       @BeforeEach
       void setup() {
             marca = marcasRepository.save(new Marca("GLOCK"));
             calibre = calibreRepository.save(new Calibre("9mm"));
-            armaControle = armaRepository.save(new Arma(
-                        LocalRegistroArma.SINARM,
-                        "ARMACONTROLE",
-                        "ARMACONTROLE",
-                        "ARMACONTROLE",
-                        "ARMACONTROLE",
-                        calibre,
-                        marca,
-                        TipoAlmaArma.RAIADA,
-                        TipoUsoArma.PERMITIDA,
-                        6,
-                        SentidoRaiasArma.DIREITA,
-                        false,
-                        Date.valueOf("2030-01-01")));
       }
 
+      // =========================
+      // CREATE
+      // =========================
       @Test
       @Transactional
-      @DisplayName("Deveria cadastrar uma arma com sucesso")
-      void cadastrar_cenario1() throws Exception {
+      void deveriaCadastrarArma() throws Exception {
+
             var dto = new ArmaCreateDto(
                         LocalRegistroArma.SIGMA,
                         "CRAF123",
                         "SERIE001",
                         "CANO001",
-                        "G17 Gen5",
+                        "G17",
                         calibre.getId(),
                         marca.getId(),
                         TipoAlmaArma.RAIADA,
@@ -99,39 +85,70 @@ public class ArmaControllerTest extends BaseTest {
                         false,
                         Date.valueOf("2030-01-01"));
 
-            var response = mockMvc.perform(
-                        post("/armas")
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(armaCreateDtoJson.write(dto).getJson()))
-                        .andReturn().getResponse();
-
-            assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-            assertThat(response.getContentAsString()).contains("SERIE001");
+            mockMvc.perform(post("/armas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(createJson.write(dto).getJson()))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.numeroSerie").value("SERIE001"));
       }
 
+      // =========================
+      // LIST
+      // =========================
       @Test
-      @DisplayName("Deveria listar todas as armas")
-      void listar_cenario1() throws Exception {
-            armaRepository.save(new Arma(criarDtoExemplo("SERIE_LISTA"), calibre, marca));
+      @Transactional
+      void deveriaListarArmas() throws Exception {
+
+            armaRepository.save(new Arma(
+                        LocalRegistroArma.SINARM,
+                        "CRAF",
+                        "SERIE_LISTA",
+                        "CANO",
+                        "MODEL",
+                        calibre,
+                        marca,
+                        TipoAlmaArma.RAIADA,
+                        TipoUsoArma.PERMITIDA,
+                        6,
+                        SentidoRaiasArma.DIREITA,
+                        false,
+                        Date.valueOf("2030-01-01")));
 
             mockMvc.perform(get("/armas"))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$").isArray())
-                        .andExpect(jsonPath("$.length()").value(2));
+                        .andExpect(jsonPath("$.length()").value(1));
       }
 
+      // =========================
+      // UPDATE
+      // =========================
       @Test
       @Transactional
-      @DisplayName("Deveria atualizar dados da arma")
-      void atualizar_cenario1() throws Exception {
-            var arma = armaRepository.save(new Arma(criarDtoExemplo("ORIGINAL"), calibre, marca));
-            var dtoUpdate = new ArmaUpdateDto(
+      void deveriaAtualizarArma() throws Exception {
+
+            var arma = armaRepository.save(new Arma(
+                        LocalRegistroArma.SINARM,
+                        "CRAF",
+                        "ORIGINAL",
+                        "CANO",
+                        "MODEL",
+                        calibre,
+                        marca,
+                        TipoAlmaArma.RAIADA,
+                        TipoUsoArma.PERMITIDA,
+                        6,
+                        SentidoRaiasArma.DIREITA,
+                        false,
+                        Date.valueOf("2030-01-01")));
+
+            var dto = new ArmaUpdateDto(
                         arma.getId(),
                         null,
                         null,
-                        "SERIE_NOVA", // teste
+                        "SERIE_NOVA",
                         null,
-                        "Modelo Novo", // teste
+                        "Modelo Novo",
                         null,
                         null,
                         null,
@@ -141,31 +158,41 @@ public class ArmaControllerTest extends BaseTest {
                         null,
                         null);
 
-            mockMvc.perform(
-                        put("/armas")
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(armaUpdateDtoJson.write(dtoUpdate).getJson()))
+            mockMvc.perform(put("/armas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateJson.write(dto).getJson()))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.numeroSerie").value("SERIE_NOVA"))
                         .andExpect(jsonPath("$.modelo").value("Modelo Novo"));
       }
 
+      // =========================
+      // DELETE
+      // =========================
       @Test
       @Transactional
-      @DisplayName("Deveria realizar soft delete (ou delete conforme service)")
-      void deletar_cenario1() throws Exception {
-            var arma = armaRepository.save(new Arma(criarDtoExemplo("DELETE_ME"), calibre, marca));
+      void deveriaDeletarArma() throws Exception {
+
+            var arma = armaRepository.save(new Arma(
+                        LocalRegistroArma.SINARM,
+                        "CRAF",
+                        "DELETE",
+                        "CANO",
+                        "MODEL",
+                        calibre,
+                        marca,
+                        TipoAlmaArma.RAIADA,
+                        TipoUsoArma.PERMITIDA,
+                        6,
+                        SentidoRaiasArma.DIREITA,
+                        false,
+                        Date.valueOf("2030-01-01")));
 
             mockMvc.perform(delete("/armas/" + arma.getId()))
                         .andExpect(status().isNoContent());
 
-           //TODO ANALISAR 
-      }
+            var armaBanco = armaRepository.findById(arma.getId()).orElseThrow();
 
-      private ArmaCreateDto criarDtoExemplo(String serie) {
-            return new ArmaCreateDto(
-                        LocalRegistroArma.SINARM, "CRAF" + serie, serie, "CANO" + serie, "Modelo",
-                        calibre.getId(), marca.getId(), TipoAlmaArma.RAIADA, TipoUsoArma.RESTRITA,
-                        6, SentidoRaiasArma.DIREITA, false, Date.valueOf("2028-12-31"));
+            assertThat(armaBanco.getDeletada()).isTrue();
       }
 }
