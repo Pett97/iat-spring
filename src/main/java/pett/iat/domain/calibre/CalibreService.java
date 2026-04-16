@@ -13,7 +13,7 @@ import pett.iat.domain.calibre.validacoes.create.ValidacaoCriarCalibre;
 import pett.iat.domain.calibre.validacoes.update.ValidacaoesAtualizarCalibre;
 
 @Component
-public class CalibreService {
+public class CalibreService {;
 
    @Autowired
    private CalibreRespository calibreRespository;

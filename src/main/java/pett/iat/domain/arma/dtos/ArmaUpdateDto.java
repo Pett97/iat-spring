@@ -28,7 +28,7 @@ public record ArmaUpdateDto(
 
             TipoUsoArma tipoUsoArma,
 
-            int numeroRaias,
+            Integer numeroRaias,
 
             SentidoRaiasArma sentidoRaiasArma,
 

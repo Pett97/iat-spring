@@ -31,4 +31,8 @@ public class Calibre {
       }
    }
 
+   public Calibre(String nome){
+      this.nome = nome.trim().toUpperCase();
+   }
+
 }

@@ -36,7 +36,7 @@ public class MunicaoService {
         validacoesCreateMunicao.forEach(regras -> regras.validar(dados));
 
         var calibre = this.buscarCalibrePorId(dados.calibreId());
-        var municao = new Municao(dados.nome(), dados.sku(), dados.preco(), dados.quantidade(),calibre);
+        var municao = new Municao(dados.nome(), dados.sku(), dados.preco(), dados.quantidade(), calibre);
 
         produtoMunicaoRepository.save(municao);
 
@@ -58,6 +58,7 @@ public class MunicaoService {
     }
 
     private Calibre buscarCalibrePorId(Long id) {
-        return calibreRespository.getReferenceById(id);
+        return calibreRespository.findById(id)
+                .orElseThrow(() -> new ValidacaoExecption("Calibre não encontrado com ID: " + id));
     }
 }

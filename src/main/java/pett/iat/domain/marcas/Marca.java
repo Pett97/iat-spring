@@ -25,6 +25,10 @@ public class Marca {
 
    private String nome;
 
+   public Marca(String nome){
+      this.nome = nome.toUpperCase();
+   }
+
    public void atualizarNome(MarcaUpdateDto dados) {
       if (dados.nome() != null) {
          this.nome = dados.nome().toUpperCase();

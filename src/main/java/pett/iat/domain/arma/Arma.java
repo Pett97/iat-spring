@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ import pett.iat.enums.TipoUsoArma;
 @Entity(name = "Arma")
 @Table(name = "armas")
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -105,6 +107,37 @@ public class Arma {
       this.dataVencimentoCraf = dto.dataVencimentoCraf();
       this.deletada = false;
    }
+
+   public Arma(
+      LocalRegistroArma localRegistroArma,
+      String numeroCraf,
+      String numeroSerie,
+      String numeroCano,
+      String modelo,
+      Calibre calibre,
+      Marca marca,
+      TipoAlmaArma tipoAlmaArma,
+      TipoUsoArma tipoUsoArma,
+      int numeroRaias,
+      SentidoRaiasArma sentidoRaiasArma,
+      Boolean vencimentoIndeterminado,
+      Date dataVencimentoCraf
+) {
+   this.localRegistroArma = localRegistroArma;
+   this.numeroCraf = numeroCraf;
+   this.numeroSerie = numeroSerie.toUpperCase().trim();
+   this.numeroCano = numeroCano.toUpperCase().trim();
+   this.modelo = modelo;
+   this.calibre = calibre;
+   this.marca = marca;
+   this.tipoAlmaArma = tipoAlmaArma;
+   this.tipoUsoArma = tipoUsoArma;
+   this.numeroRaias = numeroRaias;
+   this.sentidoRaiasArma = sentidoRaiasArma;
+   this.vencimentoIndeterminado = vencimentoIndeterminado;
+   this.dataVencimentoCraf = dataVencimentoCraf;
+   this.deletada = false;
+}
 
    public void deletar() {
       this.deletada = true;

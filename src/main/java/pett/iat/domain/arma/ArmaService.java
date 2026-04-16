@@ -39,7 +39,7 @@ public class ArmaService {
 
    public ArmaDetailDto atualizar(ArmaUpdateDto dto) {
       var arma = armaRepository.findById(dto.id())
-            .orElseThrow(() -> new ValidacaoExecption("nenhuma armaencontrada com esse id"));
+            .orElseThrow(() -> new ValidacaoExecption("nenhuma arma encontrada com esse id"));
 
       if (dto.calibreId() != null) {
          var calibre = this.getCalibreById(dto.calibreId());
