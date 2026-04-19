@@ -37,14 +37,17 @@ public class Embalagem {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
+   @Column(name = "numero_serie")
    private String codigo;
 
    @Enumerated(EnumType.STRING)
-   @Column(name = "status_municao")
+   @Column(name = "status")
    private StatusMunicao statusMunicao;
-
+   
+   @Column(name = "data_entrada")
    private LocalDateTime dataEntrada;
 
+   @Column(name = "data_saida")
    public LocalDateTime dataSaida;
 
    @ManyToOne(fetch = FetchType.LAZY)

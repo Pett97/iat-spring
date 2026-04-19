@@ -37,7 +37,7 @@ import pett.iat.domain.produto.municao.MunicaoRepository;
 @SpringBootTest(classes = IatApplication.class)
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
-@ActiveProfiles("teste")
+@ActiveProfiles("test")
 public class LoteControllerTest extends BaseTest {
 
       @Autowired
