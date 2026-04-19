@@ -1,8 +1,10 @@
 package iat.domain.estoque.lote;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -160,5 +162,16 @@ public class LoteControllerTest extends BaseTest {
 
             assertThat(response.getContentAsString())
                         .contains("Nenhum lote encontrado para o id:");
+      }
+
+      @Test
+      void devoConseguirListarOsLotesPorIdProdutoMunicao() throws Exception {
+
+            mockMvc.perform(get("/lote/produtos/" + municaoControle.getId() + "/lotes"))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$").isArray())
+                        .andExpect(jsonPath("$[0].id").exists())
+                        .andExpect(jsonPath("$[0].codigo").value("CONTROLE"))
+                        .andExpect(jsonPath("$[0].nomeMunicao").value("Munição Point Hollow"));
       }
 }
