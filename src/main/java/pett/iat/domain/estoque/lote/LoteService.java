@@ -59,9 +59,20 @@ public class LoteService {
    public LoteDetailDto atualizarLote(LoteUpdateDto dto) {
       this.validarLoteUpdate.forEach(regra -> regra.validar(dto));
 
-      Lote lote = Lote.builder().codigo(dto.codigo()).build();
-      lote.atualizar(dto);
+      var lote = this.loteRepository.findById(dto.loteId())
+            .orElseThrow(() -> new ValidacaoExecption("Não foi encontrada nenhum lote com o id" + dto.loteId()));
 
+      var municao = this.municaoRepository.findById(dto.produtoId())
+            .orElseThrow(() -> new ValidacaoExecption("Não foi encontrada nenhuma municao com o id" + dto.produtoId()));
+
+      lote.atualizar(dto, municao);
+
+      var loteDetail = this.buildDetailDto(lote);
+
+      return loteDetail;
+   }
+
+   private LoteDetailDto buildDetailDto(Lote lote) {
       return new LoteDetailDto(lote);
    }
 

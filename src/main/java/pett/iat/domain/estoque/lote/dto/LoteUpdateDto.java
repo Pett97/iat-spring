@@ -6,10 +6,8 @@ import jakarta.validation.constraints.Size;
 
 public record LoteUpdateDto(
 
-      @NotNull
-      Long loteId,
+            @NotNull Long loteId,
 
-      @NotBlank @Size(min = 3) String codigo,
+            @Size(min = 3) String codigo,
 
-      @NotNull Long produtoId) {
-}
+            Long produtoId) {}
