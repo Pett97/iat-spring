@@ -6,7 +6,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import pett.iat.domain.arma.ArmaRepository;
 import pett.iat.domain.calibre.CalibreRespository;
+import pett.iat.domain.estoque.embalagem.EmbalagemRepository;
+import pett.iat.domain.estoque.lote.LoteRepository;
 import pett.iat.domain.marcas.MarcasARepository;
+import pett.iat.domain.produto.municao.MunicaoRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -21,8 +24,20 @@ public abstract class BaseTest {
    @Autowired
    protected MarcasARepository marcasRepository;
 
+   @Autowired
+   protected MunicaoRepository municaoRepository;
+
+   @Autowired
+   protected LoteRepository loteRepository;
+
+   @Autowired
+   protected EmbalagemRepository embalagemRepository;
+
    @BeforeEach
    void limparBanco() {
+      embalagemRepository.deleteAllInBatch();
+      loteRepository.deleteAllInBatch();  
+      municaoRepository.deleteAllInBatch();
       armaRepository.deleteAllInBatch();
       calibreRepository.deleteAllInBatch();
       marcasRepository.deleteAllInBatch();

@@ -42,9 +42,12 @@ public class Lote {
       this.codigo = this.codigo != null ? this.codigo.toUpperCase().trim() : null;
    }
 
-   public void atualizar(LoteUpdateDto dto) {
+   public void atualizar(LoteUpdateDto dto, Municao municaoAtualizada) {
       if (dto.codigo() != null) {
          this.codigo = dto.codigo().toUpperCase().trim();
+      }
+      if (municaoAtualizada != null) {
+         this.municao = municaoAtualizada;
       }
    }
 }

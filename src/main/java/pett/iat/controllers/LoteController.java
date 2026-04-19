@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import pett.iat.domain.estoque.lote.LoteService;
@@ -41,20 +40,20 @@ public class LoteController {
 
    @PostMapping
    @Transactional
-   public ResponseEntity<LoteDetailDto> cadastrar(LoteCreateDto dto) {
+   public ResponseEntity<LoteDetailDto> cadastrar(@RequestBody @Valid LoteCreateDto dto) {
       var lote = this.loteService.cadastrarLote(dto);
       return ResponseEntity.ok(lote);
    }
 
-   @PutMapping
+   @PutMapping()
    @Transactional
    public ResponseEntity<LoteDetailDto> atualizar(@RequestBody @Valid LoteUpdateDto dto) {
       var lote = this.loteService.atualizarLote(dto);
       return ResponseEntity.ok(lote);
    }
-   
+
    @GetMapping("/produtos/{produtoId}/lotes")
-   public ResponseEntity<List<LoteDetailDto>> listarLotePorIdProdutoMunica(@PathVariable Long produtoId){
+   public ResponseEntity<List<LoteDetailDto>> listarLotePorIdProdutoMunicao(@PathVariable Long produtoId) {
       var lotes = this.loteService.listarPorProduto(produtoId);
       return ResponseEntity.ok(lotes);
    }
