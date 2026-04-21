@@ -15,12 +15,14 @@ public interface EmbalagemRepository extends JpaRepository<Embalagem, Long> {
 
    List<Embalagem> findByDataSaidaIsNull();
 
+   boolean existsByCodigoAndDataSaidaIsNotNull(String codigo);
+
    List<Embalagem> findByDataSaidaIsNotNull();
 
    List<Embalagem> findByStatusMunicao(StatusMunicao statusMunicao);
 
    Optional<Embalagem> findByCodigo(String codigo);
-   //TODO tem que as vendas ou coisa assim 
+   //TODO tem que as vendas ou coisa assim mas é para depois 
    //Optional<Embalagem> findByIdAndVendaIsNull(Long id);
 
    boolean existsByLoteId(Long idLote);

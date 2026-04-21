@@ -15,6 +15,7 @@ import pett.iat.domain.estoque.embalagem.validacoes.update.ValidarAtualizarEmbal
 import pett.iat.domain.estoque.lote.Lote;
 import pett.iat.domain.estoque.lote.LoteRepository;
 import pett.iat.enums.StatusMunicao;
+import pett.iat.helpers.FormatarData;
 
 @Service
 public class EmbalagemService {
@@ -77,8 +78,22 @@ public class EmbalagemService {
       return new EmbalagemDetailDto(embalagem);
    }
 
-   public void deletar(Long id){
-       this.embalagemRepository.deleteById(id);
+   public void deletar(Long id) {
+
+      var embalagem = this.getEmbalagemById(id);
+
+      boolean embalagemJaSaiu = this.embalagemRepository.existsByCodigoAndDataSaidaIsNotNull(embalagem.getCodigo());
+
+      if (embalagemJaSaiu) {
+         throw new ValidacaoExecption("Essa embalagem não pode ser deletada pois ja foi registrada uma saida:"
+               + this.converterData(embalagem.getDataSaida())+" "+embalagem.getStatusMunicao());
+      }
+
+      this.embalagemRepository.deleteById(id);
+   }
+
+   private String converterData(LocalDateTime data) {
+      return FormatarData.converterData(data);
    }
 
    private Embalagem getEmbalagemById(Long id) {

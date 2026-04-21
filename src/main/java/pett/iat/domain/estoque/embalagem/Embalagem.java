@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemUpdateDto;
 import pett.iat.domain.estoque.lote.Lote;
 import pett.iat.enums.StatusMunicao;
@@ -30,6 +31,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Builder
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Embalagem {
 
