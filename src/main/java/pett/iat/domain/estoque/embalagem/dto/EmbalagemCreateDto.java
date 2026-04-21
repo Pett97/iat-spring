@@ -9,11 +9,11 @@ import pett.iat.enums.StatusMunicao;
 
 public record EmbalagemCreateDto(
 
-   @NotBlank
-   @Size(min = 3)
-   String codigo,
-   @NotNull
-   Long idLote,
-   StatusMunicao statusMunicao,
-   LocalDateTime dataEntrada
-) {}
+      @NotBlank(message = "O código da embalagem é obrigatório") @Size(min = 3, message = "O código deve ter no mínimo 3 caracteres") String codigo,
+
+      @NotNull(message = "O lote é obrigatório") Long idLote,
+
+      StatusMunicao statusMunicao,
+
+      LocalDateTime dataEntrada) {
+}

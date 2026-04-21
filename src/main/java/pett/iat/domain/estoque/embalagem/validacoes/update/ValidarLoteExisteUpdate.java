@@ -20,10 +20,9 @@ public class ValidarLoteExisteUpdate implements ValidarAtualizarEmbalagem {
          throw new ValidacaoExecption("Para cadastrar um codigo de embalagem é ncessario informar um lote ");
       }
 
-      Lote lote = loteRepository.findById(dados.idLote()).get();
-
-      if (lote == null) {
+      if (!this.loteRepository.findById(dados.idLote()).isPresent()) {
          throw new ValidacaoExecption("Não foi encontrado nenhum lote com o id:" + dados.idLote());
       }
+
    }
 }

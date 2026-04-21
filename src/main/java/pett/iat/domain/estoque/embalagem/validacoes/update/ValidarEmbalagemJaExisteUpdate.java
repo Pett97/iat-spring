@@ -21,9 +21,7 @@ public class ValidarEmbalagemJaExisteUpdate implements ValidarAtualizarEmbalagem
 
       String codigoInformado = dados.codigo().toUpperCase().trim();
 
-      Embalagem embalagem = this.embalagemRepository.findByCodigo(codigoInformado).get();
-
-      if (embalagem != null) {
+      if (this.embalagemRepository.findByCodigo(codigoInformado).isPresent()) {
          throw new ValidacaoExecption(
                "Esse codigo :" + codigoInformado + " ja está cadastrado no sistema, por favor verifique");
       }

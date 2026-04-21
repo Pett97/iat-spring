@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemUpdateDto;
 import pett.iat.domain.estoque.lote.Lote;
 import pett.iat.enums.StatusMunicao;
@@ -30,6 +31,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Builder
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Embalagem {
 
@@ -37,14 +39,17 @@ public class Embalagem {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
+   @Column(name = "numero_serie")
    private String codigo;
 
    @Enumerated(EnumType.STRING)
-   @Column(name = "status_municao")
+   @Column(name = "status")
    private StatusMunicao statusMunicao;
-
+   
+   @Column(name = "data_entrada")
    private LocalDateTime dataEntrada;
 
+   @Column(name = "data_saida")
    public LocalDateTime dataSaida;
 
    @ManyToOne(fetch = FetchType.LAZY)

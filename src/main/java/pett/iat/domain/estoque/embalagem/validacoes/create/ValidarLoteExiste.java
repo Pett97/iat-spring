@@ -14,16 +14,13 @@ public class ValidarLoteExiste implements ValidarCriarEmbalagem {
    @Autowired
    private LoteRepository loteRepository;
 
-   public void validar(EmbalagemCreateDto dados){
+   public void validar(EmbalagemCreateDto dados) {
 
-      if(dados.idLote() == null){
-          throw new ValidacaoExecption("Para cadastrar um codigo de embalagem é ncessario informar um lote ");
+      if (dados.idLote() == null) {
+         throw new ValidacaoExecption("Para cadastrar um codigo de embalagem é ncessario informar um lote ");
       }
 
-      Lote lote  = loteRepository.findById(dados.idLote()).get();
-
-      if(lote == null){
-         throw new ValidacaoExecption("Não foi encontrado nenhum lote com o id:"+dados.idLote());
-      }
+      loteRepository.findById(dados.idLote())
+            .orElseThrow(() -> new ValidacaoExecption("Não foi encontrado nenhum lote com o id:" + dados.idLote()));
    }
 }
