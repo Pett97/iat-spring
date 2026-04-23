@@ -18,6 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pett.iat.domain.aluno.dto.AlunoCreateDto;
 import pett.iat.enums.Estado;
 
 @Entity(name = "Aluno")
@@ -94,7 +95,26 @@ public class Aluno {
       this.emailSecundario = this.emailSecundario != null ? this.emailSecundario.toUpperCase().trim() : null;
    }
 
-   public void atualizar(){
-      
+   public Aluno(AlunoCreateDto dto) {
+      this.nome = dto.nome();
+      this.cpf = dto.cpf();
+      this.rg = dto.rg();
+      this.rgDataExpedicao = dto.rgDataExpedicao();
+
+      this.telefonePrincipal = dto.telefonePrincipal();
+      this.telefonePrincipalTemWhatsapp = Boolean.TRUE.equals(dto.telefonePrincipalTemWhatsapp());
+
+      this.telefoneSecundario = dto.telefoneSecundario();
+      this.telefoneSecundarioTemWhatsapp = Boolean.TRUE.equals(dto.telefoneSecundarioTemWhatsapp());
+
+      this.emailPrincipal = dto.emailPrincipal();
+      this.emailPrincipalValidado = Boolean.TRUE.equals(dto.emailPrincipalValidado());
+
+      this.emailSecundario = dto.emailSecundario(); 
+      this.emailSecundarioValidado = Boolean.TRUE.equals(dto.emailSecundarioValidado());
+   }
+
+   public void atualizar() {
+
    }
 }
