@@ -25,7 +25,7 @@ public class AlunoService {
    }
 
    public List<AlunoDetailDto> alunosComEmailSecundariosValidos() {
-      return this.alunoRepository.finbByEmailSecundarioValidadoTrue().stream().map(AlunoDetailDto::new).toList();
+      return this.alunoRepository.findByEmailSecundarioValidadoTrue().stream().map(AlunoDetailDto::new).toList();
    }
 
    public AlunoDetailDto cadastrar(AlunoCreateDto dto) {
@@ -57,7 +57,7 @@ public class AlunoService {
    }
 
    public List<AlunoDetailDto> alunosEmailSecundarioValidado() {
-      return this.alunoRepository.finbByEmailSecundarioValidadoTrue().stream().map(AlunoDetailDto::new).toList();
+      return this.alunoRepository.findByEmailSecundarioValidadoTrue().stream().map(AlunoDetailDto::new).toList();
    }
 
    private Aluno getAlunoById(Long id) {

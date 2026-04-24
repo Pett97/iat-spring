@@ -1,0 +1,3 @@
+ALTER TABLE alunos
+   ADD COLUMN deletado TINYINT DEFAULT 0,
+   ADD COLUMN deletado_at DATETIME NULL;

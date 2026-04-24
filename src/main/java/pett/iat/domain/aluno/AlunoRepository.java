@@ -15,5 +15,5 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
    List<Aluno> findByEmailPrincipalValidadoTrue();
 
-   List<Aluno> finbByEmailSecundarioValidadoTrue();
+   List<Aluno> findByEmailSecundarioValidadoTrue();
 }

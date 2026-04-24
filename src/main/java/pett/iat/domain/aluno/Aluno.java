@@ -1,6 +1,7 @@
 package pett.iat.domain.aluno;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -77,6 +78,11 @@ public class Aluno {
 
    private String logradouro;
 
+   private boolean deletado;
+
+   @Column(name = "deletado_at")
+   private LocalDateTime deletadoAt;
+
    @Column(name = "numero_logradouro")
    private int numeroLogradouro;
 
@@ -113,6 +119,10 @@ public class Aluno {
 
       this.emailSecundario = dto.emailSecundario();
       this.emailSecundarioValidado = Boolean.TRUE.equals(dto.emailSecundarioValidado());
+   }
+
+   private void deletar(){
+      this.deletadoAt = LocalDateTime.now();
    }
 
 
