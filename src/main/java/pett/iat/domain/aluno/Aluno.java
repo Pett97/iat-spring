@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pett.iat.domain.aluno.dto.AlunoCreateDto;
+import pett.iat.domain.aluno.dto.AlunoUpdateDto;
 import pett.iat.enums.Estado;
 
 @Entity(name = "Aluno")
@@ -110,11 +111,85 @@ public class Aluno {
       this.emailPrincipal = dto.emailPrincipal();
       this.emailPrincipalValidado = Boolean.TRUE.equals(dto.emailPrincipalValidado());
 
-      this.emailSecundario = dto.emailSecundario(); 
+      this.emailSecundario = dto.emailSecundario();
       this.emailSecundarioValidado = Boolean.TRUE.equals(dto.emailSecundarioValidado());
    }
 
-   public void atualizar() {
 
+   public void atualizar(AlunoUpdateDto dto) {
+
+      if (dto.nome() != null) {
+         this.nome = dto.nome();
+      }
+
+      if (dto.cpf() != null) {
+         this.cpf = dto.cpf();
+      }
+
+      if (dto.rg() != null) {
+         this.rg = dto.rg();
+      }
+
+      if (dto.rgDataExpedicao() != null) {
+         this.rgDataExpedicao = dto.rgDataExpedicao();
+      }
+
+      if (dto.telefonePrincipal() != null) {
+         this.telefonePrincipal = dto.telefonePrincipal();
+      }
+
+      if (dto.telefonePrincipalTemWhatsapp() != null) {
+         this.telefonePrincipalTemWhatsapp = dto.telefonePrincipalTemWhatsapp();
+      }
+
+      if (dto.telefoneSecundario() != null) {
+         this.telefoneSecundario = dto.telefoneSecundario();
+      }
+
+      if (dto.telefoneSecundarioTemWhatsapp() != null) {
+         this.telefoneSecundarioTemWhatsapp = dto.telefoneSecundarioTemWhatsapp();
+      }
+
+      if (dto.emailPrincipal() != null) {
+         this.emailPrincipal = dto.emailPrincipal();
+      }
+
+      if (dto.emailPrincipalValidado() != null) {
+         this.emailPrincipalValidado = dto.emailPrincipalValidado();
+      }
+
+      if (dto.emailSecundario() != null) {
+         this.emailSecundario = dto.emailSecundario();
+      }
+
+      if (dto.emailSecundarioValidado() != null) {
+         this.emailSecundarioValidado = dto.emailSecundarioValidado();
+      }
+
+      if (dto.cep() != null) {
+         this.cep = dto.cep();
+      }
+
+      if (dto.estado() != null) {
+         this.estado = dto.estado();
+      }
+
+      if (dto.cidade() != null) {
+         this.cidade = dto.cidade();
+      }
+
+      if (dto.logradouro() != null) {
+         this.logradouro = dto.logradouro();
+      }
+
+      if (dto.numeroLogradouro() >= 0) {
+         this.numeroLogradouro = dto.numeroLogradouro();
+      }
+
+      if (dto.complemento() != null) {
+         this.complemento = dto.complemento();
+      }
    }
+
+   //TODO ajustar para ter soft dos deletes 
 }

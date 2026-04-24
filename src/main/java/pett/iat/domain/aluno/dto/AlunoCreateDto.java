@@ -3,6 +3,7 @@ package pett.iat.domain.aluno.dto;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.*;
+import pett.iat.enums.Estado;
 
 public record AlunoCreateDto(
 
@@ -41,6 +42,30 @@ public record AlunoCreateDto(
       @Email 
       String emailSecundario,
 
-      Boolean emailSecundarioValidado
+      Boolean emailSecundarioValidado,
+
+      @NotBlank
+      @Size(min = 8)
+      String cep,
+
+      @NotBlank
+      @Size(min =2)
+      Estado estado,
+      
+      @NotBlank
+      @Size(min =4)
+      String cidade,
+
+      @NotBlank
+      @Size(min =4)
+      String logradouro,
+
+      @NotNull
+      @Min(0)
+      int numeroLogradouro,
+
+      String complemento
+
+
 
 ) {}
