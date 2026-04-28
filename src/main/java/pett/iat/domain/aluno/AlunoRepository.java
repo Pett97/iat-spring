@@ -13,6 +13,10 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
    boolean existsByEmailSecundario(String email);
 
+   List<Aluno> findByDeletadoIsFalse();
+
+   List<Aluno> findByDeletadoIsTrue();
+
    List<Aluno> findByEmailPrincipalValidadoTrue();
 
    List<Aluno> findByEmailSecundarioValidadoTrue();

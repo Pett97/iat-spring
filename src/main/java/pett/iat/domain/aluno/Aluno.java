@@ -119,10 +119,23 @@ public class Aluno {
 
       this.emailSecundario = dto.emailSecundario();
       this.emailSecundarioValidado = Boolean.TRUE.equals(dto.emailSecundarioValidado());
+
+      this.cep = dto.cep();
+      this.estado = dto.estado();
+      this.cidade = dto.cidade();
+      this.logradouro = dto.logradouro();
+      this.numeroLogradouro = dto.numeroLogradouro();
+      this.complemento = dto.complemento();
    }
 
-   private void deletar(){
+   public void deletar(){
+      this.deletado = true;
       this.deletadoAt = LocalDateTime.now();
+   }
+
+   public void recuperar(){
+      this.deletado = false;
+      this.deletadoAt = null;
    }
 
 
@@ -199,7 +212,5 @@ public class Aluno {
       if (dto.complemento() != null) {
          this.complemento = dto.complemento();
       }
-   }
-
-   //TODO ajustar para ter soft dos deletes 
+   } 
 }

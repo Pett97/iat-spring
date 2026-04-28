@@ -17,7 +17,11 @@ public class AlunoService {
    private AlunoRepository alunoRepository;
 
    public List<AlunoDetailDto> listar() {
-      return this.alunoRepository.findAll().stream().map(AlunoDetailDto::new).toList();
+      return this.alunoRepository.findByDeletadoIsFalse().stream().map(AlunoDetailDto::new).toList();
+   }
+
+   public List<AlunoDetailDto> listarAlunosDeletados(){
+      return this.alunoRepository.findByDeletadoIsTrue().stream().map(AlunoDetailDto::new).toList();
    }
 
    public List<AlunoDetailDto> alunosComEmailPrincipalValidos() {
@@ -46,10 +50,14 @@ public class AlunoService {
    }
 
    public void deletar(Long id) {
-
       Aluno aluno = this.getAlunoById(id);
+      aluno.deletar();
 
-      this.alunoRepository.deleteById(aluno.getId());
+   }
+
+   public void recuperar(Long id){
+      Aluno aluno = this.getAlunoById(id);
+      aluno.recuperar();
    }
 
    public List<AlunoDetailDto> alunosEmailPrincipalValidado() {

@@ -48,8 +48,7 @@ public record AlunoCreateDto(
       @Size(min = 8)
       String cep,
 
-      @NotBlank
-      @Size(min =2)
+      @NotNull
       Estado estado,
       
       @NotBlank
@@ -62,7 +61,7 @@ public record AlunoCreateDto(
 
       @NotNull
       @Min(0)
-      int numeroLogradouro,
+      Integer numeroLogradouro,
 
       String complemento
 
