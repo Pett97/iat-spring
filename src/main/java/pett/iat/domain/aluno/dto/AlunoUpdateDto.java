@@ -40,7 +40,7 @@ public record AlunoUpdateDto(
 
             @Size(min = 8) String cep,
 
-            @Size(min = 2) Estado estado,
+             Estado estado,
 
             @Size(min = 4) String cidade,
 
