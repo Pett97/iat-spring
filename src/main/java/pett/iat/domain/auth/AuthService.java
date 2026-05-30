@@ -12,10 +12,9 @@ public class AuthService implements UserDetailsService {
    @Autowired
    private UserRepository userRepository;
 
-
-   //TODO terminar pra criar usuario
    @Override
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       return userRepository.findByLogin(username);
    }
+
 }

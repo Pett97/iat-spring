@@ -7,7 +7,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,6 +21,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pett.iat.domain.auth.dtos.DtoCreateLogin;
+import pett.iat.enums.UsuarioRole;
 
 @Entity(name = "User")
 @Table(name = "users")
@@ -31,7 +36,7 @@ public class User implements UserDetails {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-   private String nome;
+   private String name;
 
    private String login;
 
@@ -39,9 +44,20 @@ public class User implements UserDetails {
 
    private boolean ativo;
 
+   @Enumerated(EnumType.STRING)
+   @Column(name="role")
+   private UsuarioRole usuarioRole;
+
+   public User(String name,String login,String passwordEncoded,UsuarioRole usuarioRole) {
+      this.name = name;
+      this.login = login;
+      this.password = passwordEncoded;
+      this.usuarioRole = usuarioRole;
+   }
+
    @Override
    public String getUsername() {
-      return this.nome;
+      return this.name;
    }
 
    @Override
@@ -51,36 +67,38 @@ public class User implements UserDetails {
 
    @Override
    public boolean isEnabled() {
-      return ativo;
+      return true;
    }
 
+
+   //TODO ajustar para ver como configurar o tmepo de expiraca 
    @Override
    public boolean isAccountNonExpired() {
-      return false;
+      return true;
    }
 
    @Override
    public boolean isAccountNonLocked() {
-      return false;
+      return true;
    }
 
    @Override
    public boolean isCredentialsNonExpired() {
-      return false;
+      return true;
    }
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+      return List.of(new SimpleGrantedAuthority("ROLE_" + usuarioRole.name()));
    }
 
    @PrePersist
    private void prePersist() {
-      this.nome = this.nome != null ? this.nome.toUpperCase() : null;
+      this.name = this.name != null ? this.name.toUpperCase() : null;
    }
 
    @PreUpdate
    private void preUpdate() {
-      this.nome = this.nome != null ? this.nome.toUpperCase() : null;
+      this.name = this.name != null ? this.name.toUpperCase() : null;
    }
 }

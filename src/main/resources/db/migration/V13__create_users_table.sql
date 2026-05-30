@@ -4,6 +4,5 @@ CREATE TABLE users (
    login VARCHAR(255) NOT NULL UNIQUE,
    password VARCHAR(255) NOT NULL,
    ativo TINYINT(1) DEFAULT 1,
-
    PRIMARY KEY (id)
 );
