@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import pett.iat.domain.estoque.lote.LoteService;
@@ -20,7 +23,9 @@ import pett.iat.domain.estoque.lote.dto.LoteDetailDto;
 import pett.iat.domain.estoque.lote.dto.LoteUpdateDto;
 
 @RestController
+@Tag(name = "Lotes de Munições ")
 @RequestMapping("/lote")
+@SecurityRequirement(name = "bearer-key")
 public class LoteController {
 
    @Autowired

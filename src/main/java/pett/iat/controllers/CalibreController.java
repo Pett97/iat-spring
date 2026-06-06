@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import pett.iat.domain.calibre.CalibreRespository;
@@ -22,7 +24,9 @@ import pett.iat.domain.calibre.dtos.CalibreDetailDto;
 import pett.iat.domain.calibre.dtos.CalibreUpdateDto;
 
 @RestController
+@Tag(name = "Calibres")
 @RequestMapping("calibres")
+@SecurityRequirement(name = "bearer-key")
 public class CalibreController {
 
    @Autowired

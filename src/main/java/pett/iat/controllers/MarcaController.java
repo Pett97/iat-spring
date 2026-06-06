@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import pett.iat.domain.ValidacaoExecption;
@@ -22,7 +25,9 @@ import pett.iat.domain.marcas.dtos.MarcaDetailDto;
 import pett.iat.domain.marcas.dtos.MarcaUpdateDto;
 
 @RestController
+@Tag(name = "Marcas de Armas")
 @RequestMapping("marcas")
+@SecurityRequirement(name = "bearer-key")
 public class MarcaController {
 
    @Autowired

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import pett.iat.domain.estoque.embalagem.EmbalagemService;
@@ -21,7 +23,9 @@ import pett.iat.domain.estoque.embalagem.dto.EmbalagemDetailDto;
 import pett.iat.domain.estoque.embalagem.dto.EmbalagemUpdateDto;
 
 @RestController
+@Tag(name = "Embalagens")
 @RequestMapping("/embalagem")
+@SecurityRequirement(name = "bearer-key")
 public class EmbalagemController {
 
     @Autowired

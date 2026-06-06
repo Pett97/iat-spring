@@ -15,6 +15,9 @@ import pett.iat.domain.auth.User;
 
 @Service
 public class TokenService {
+
+   private static final String ISSUER = "API IAT";
+
    @Value("${api.security.token.secret}")
    private String secret;
 
@@ -23,10 +26,9 @@ public class TokenService {
          var algoritmo = Algorithm.HMAC256(secret);
 
          return JWT.create()
-               .withIssuer("API IAT.iat")
+               .withIssuer(ISSUER)
                .withSubject(user.getLogin())
                .withExpiresAt(dataExpira())
-               .withClaim("id", user.getLogin())// aqui eu posso fazer tipo de acesso e etc
                .sign(algoritmo);
 
       } catch (Exception e) {
@@ -42,7 +44,7 @@ public class TokenService {
       try {
          var algoritimo = Algorithm.HMAC256(secret);
          return JWT.require(algoritimo)
-               .withIssuer("API Voli.api")
+               .withIssuer(ISSUER)
                .build()
                .verify(tokenJWT)
                .getSubject();
