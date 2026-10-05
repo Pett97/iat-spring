@@ -21,12 +21,14 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pett.iat.domain.auth.dtos.DtoCreateLogin;
 import pett.iat.enums.UsuarioRole;
 
 @Entity(name = "User")
 @Table(name = "users")
 @Getter
+@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")

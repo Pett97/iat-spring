@@ -2,6 +2,7 @@ package pett.iat.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 
 import pett.iat.domain.aluno.AlunoRepository;
@@ -14,6 +15,7 @@ import pett.iat.domain.produto.municao.MunicaoRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@WithMockUser
 public abstract class BaseTest {
 
    @Autowired
