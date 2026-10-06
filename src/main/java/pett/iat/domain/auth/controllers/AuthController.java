@@ -58,10 +58,7 @@ public class AuthController {
       return ResponseEntity.ok(new DtoTokenJWT(tokenJWT));
    }
 
-   @GetMapping("/me")
-   public ResponseEntity getDetailsUser(@AuthenticationPrincipal User user) {
-      return ResponseEntity.ok(user);
-   }
+   
 
    @PostMapping("/register")
    @PreAuthorize("hasRole('MASTER')")
