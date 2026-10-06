@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import pett.iat.domain.auth.AuthService;
 import pett.iat.domain.auth.User;
 import pett.iat.domain.auth.UserRepository;
 import pett.iat.domain.auth.dtos.DtoCreateLogin;
@@ -29,6 +32,9 @@ public class AuthController {
    private AuthenticationManager authenticationManager;
 
    @Autowired
+   private AuthService authService;
+
+   @Autowired
    private TokenService tokenService;
 
    @Autowired
@@ -40,6 +46,11 @@ public class AuthController {
       var authenticate = authenticationManager.authenticate(authenticationToken);
       var tokenJWT = tokenService.gerarToken((User) authenticate.getPrincipal());
       return ResponseEntity.ok(new DtoTokenJWT(tokenJWT));
+   }
+
+   @GetMapping("/me")
+   public ResponseEntity getDetailsUser(@AuthenticationPrincipal User user) {
+      return ResponseEntity.ok(user);
    }
 
    @PostMapping("/register")
