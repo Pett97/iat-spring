@@ -3,9 +3,11 @@ package pett.iat.domain.auth.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import pett.iat.domain.auth.User;
 import pett.iat.domain.auth.UserRepository;
 import pett.iat.domain.auth.dtos.DtoCreateLogin;
 import pett.iat.domain.auth.dtos.DtoLogin;
+import pett.iat.domain.auth.dtos.DtoUserMe;
 import pett.iat.infra.security.DtoTokenJWT;
 import pett.iat.infra.security.TokenService;
 
@@ -33,6 +36,14 @@ public class AuthController {
 
    @Autowired
    private UserRepository userRepository;
+
+   @GetMapping("/me")
+   public ResponseEntity<DtoUserMe> me(@AuthenticationPrincipal User user) {
+      if (user == null) {
+         return ResponseEntity.status(401).build();
+      }
+      return ResponseEntity.ok(new DtoUserMe(user.getLogin(), user.getName(), user.getUsuarioRole()));
+   }
 
    @PostMapping
    public ResponseEntity login(@RequestBody @Valid DtoLogin dtoLogin) {
