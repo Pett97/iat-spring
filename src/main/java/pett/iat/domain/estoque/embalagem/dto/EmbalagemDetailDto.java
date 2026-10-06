@@ -7,6 +7,7 @@ import pett.iat.domain.estoque.lote.dto.LoteDetailDto;
 import pett.iat.enums.StatusMunicao;
 
 public record EmbalagemDetailDto(
+            Long id,
             String codigo,
             StatusMunicao statusMunicao,
             LocalDateTime dataEntrada,
@@ -16,6 +17,7 @@ public record EmbalagemDetailDto(
 ) {
       public EmbalagemDetailDto(Embalagem embalagem) {
             this(
+                        embalagem.getId(),
                         embalagem.getCodigo(),
                         embalagem.getStatusMunicao(),
                         embalagem.getDataEntrada(),
